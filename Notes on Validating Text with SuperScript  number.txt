@@ -1,0 +1,101 @@
+Notes on Validating Text with Superscript Ordinals
+
+1. What are Superscript Ordinals?
+Superscript ordinals are numbers followed by ordinal suffixes (st, nd, rd, th) written in superscript format using HTML tags, like:
+29<sup>th</sup>
+1<sup>st</sup>
+2<sup>nd</sup>
+2. Validating Text with Superscript Ordinals
+To validate text that contains superscript ordinals, use the following regular expression:
+regex
+
+.*\d+<sup>(st|nd|rd|th)</sup>.*
+3. Explanation of the Regex
+.*: Matches any text before or after the superscript ordinal.
+\d+: Matches one or more digits (e.g., 29, 30).
+<sup>: Matches the literal <sup> tag.
+(st|nd|rd|th): Matches one of the ordinal suffixes (st, nd, rd, or th).
+</sup>: Matches the literal </sup> tag.
+.*: Matches any text after the superscript ordinal.
+4. Example Valid Text
+The following examples will match:
+
+"I got this on 29<sup>th</sup> and 30<sup>th</sup>."
+"Today is 1<sup>st</sup> of the month."
+"She was born on the 2<sup>nd</sup>."
+The following examples will not match:
+
+"I got this on 29th and 30th." (missing <sup> tags).
+"This is just a random sentence." (no ordinal numbers).
+5. Java Code to Validate Text
+Here’s a simple Java method to check if a string contains valid superscript ordinals:
+
+java
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class ValidateTextWithSuperscript {
+
+    public static boolean validateTextWithSuperscript(String input) {
+        // Regular expression to match text with numbers having <sup> tags
+        String regex = ".*\\d+<sup>(st|nd|rd|th)</sup>.*";
+
+        // Compile the pattern
+        Pattern pattern = Pattern.compile(regex);
+
+        // Match the input string
+        Matcher matcher = pattern.matcher(input);
+
+        // Return true if it matches, false otherwise
+        return matcher.matches();
+    }
+
+    public static void main(String[] args) {
+        // Test cases
+        String text1 = "I got this on 29<sup>th</sup> and 30<sup>th</sup>.";
+        String text2 = "This is just a random sentence.";
+        String text3 = "29th and 30th are the dates"; // Missing <sup> tags
+
+        System.out.println(validateTextWithSuperscript(text1)); // true
+        System.out.println(validateTextWithSuperscript(text2)); // false
+        System.out.println(validateTextWithSuperscript(text3)); // false
+    }
+}
+6. Extracting Superscript Ordinals from Text
+If you want to find all superscript ordinals in a string, use the following Java code:
+
+java
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class ExtractSuperscriptOrdinals {
+
+    public static void main(String[] args) {
+        // Input text
+        String text = "I got this on 29<sup>th</sup> and 30<sup>th</sup>.";
+
+        // Regular expression to match numbers with <sup> tags
+        String regex = "\\d+<sup>(st|nd|rd|th)</sup>";
+
+        // Compile the pattern
+        Pattern pattern = Pattern.compile(regex);
+
+        // Create a matcher
+        Matcher matcher = pattern.matcher(text);
+
+        // Find and print all matches
+        while (matcher.find()) {
+            System.out.println("Found valid superscript ordinal: " + matcher.group());
+        }
+    }
+}
+Output for the above code:
+
+Found valid superscript ordinal: 29<sup>th</sup>
+Found valid superscript ordinal: 30<sup>th</sup>
+7. Key Points to Remember
+Superscript ordinals must follow the format: number<sup>suffix</sup>.
+Use \d+ to match the number and <sup>(st|nd|rd|th)</sup> to match the superscript ordinal suffix.
+The regex .* ensures that the entire text is validated, not just the superscript part.

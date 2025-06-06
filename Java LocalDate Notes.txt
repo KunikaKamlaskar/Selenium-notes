@@ -1,0 +1,60 @@
+Java LocalDate Notes
+
+1. Get the Current Date
+java
+
+LocalDate currentDate = LocalDate.now();
+System.out.println("Current Date: " + currentDate);
+2. Convert String to LocalDate
+Default ISO-8601 Format (yyyy-MM-dd): No formatter needed.
+java
+
+String dateString = "2023-10-05";
+LocalDate date = LocalDate.parse(dateString);
+System.out.println("Converted LocalDate: " + date);
+Custom Format (MMM dd, yyyy, etc.): Use DateTimeFormatter.
+java
+
+String dateString = "Oct 05, 2023";
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+LocalDate date = LocalDate.parse(dateString, formatter);
+System.out.println("Converted LocalDate: " + date);
+3. Format LocalDate to String
+Default Format (yyyy-MM-dd):
+java
+
+LocalDate date = LocalDate.now();
+String formattedDate = date.toString();
+System.out.println("Formatted Date: " + formattedDate);
+Custom Format (dd-MM-yyyy, etc.):
+java
+
+LocalDate date = LocalDate.now();
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+String formattedDate = date.format(formatter);
+System.out.println("Formatted Date: " + formattedDate);
+4. Parse a String with Different Formats
+Example: Convert String in dd/MM/yyyy format to LocalDate.
+java
+
+String dateString = "05/10/2023";
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+LocalDate date = LocalDate.parse(dateString, formatter);
+System.out.println("Parsed LocalDate: " + date);
+5. Common Date Format Patterns
+Pattern	Example Output
+yyyy-MM-dd	2023-10-05
+dd-MM-yyyy	05-10-2023
+MM/dd/yyyy	10/05/2023
+MMM dd, yyyy	Oct 05, 2023
+MMMM dd, yyyy	October 05, 2023
+6. Notes on DateTimeFormatter
+yyyy: Year (e.g., 2023).
+MM: Month as a number (e.g., 10 for October).
+MMM: Abbreviated month (e.g., Oct).
+MMMM: Full month name (e.g., October).
+dd: Day of the month (e.g., 05).
+Quick Tips
+Always match the input string format with the DateTimeFormatter pattern.
+Use LocalDate.parse() for parsing and LocalDate.format() for formatting.
+For default ISO-8601 format (yyyy-MM-dd), no formatter is needed.
